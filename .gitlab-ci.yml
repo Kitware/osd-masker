@@ -1,0 +1,7 @@
+stages:
+  - test
+
+include:
+  - local: .gitlab-ci/.gitlab-shared.yml
+
+  - local: .gitlab-ci/.gitlab-test.yml
