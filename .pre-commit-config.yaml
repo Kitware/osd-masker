@@ -78,5 +78,5 @@ repos:
       name: pyright-external
       require_serial: true
       language: system
-      entry: pyright --verifytypes burnout --ignoreexternal src/burnout
+      entry: pyright --verifytypes osd_masker --ignoreexternal src/osd_masker
       types: [file, python]

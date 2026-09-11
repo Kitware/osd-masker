@@ -3,9 +3,9 @@ requires = ["poetry-core>=2.2.0"]
 build-backend = "poetry.core.masonry.api"
 
 [project]
-name = "burnout"
+name = "osd-masker"
 version = "0.1.0"
-description = "BurnOut is a PyTorch model for masking text and other heads-up display (HUD) elements which have been burned into a video."
+description = "OSDMasker is a PyTorch model for masking text and other on-screen display (OSD) elements which have been burned into a video."
 license = "Apache-2.0"
 readme = "README.md"
 authors = [{name = "Kitware, Inc."}]
@@ -30,7 +30,7 @@ dependencies = [
 
 [tool.poetry]
 # Poetry-specific configuration
-packages = [{include = "burnout", from="src"}]
+packages = [{include = "osd_masker", from="src"}]
 
 [dependency-groups]
 # Linting
@@ -70,13 +70,13 @@ tests = [
 addopts = [
     "-lv",                              # Show local in trace-backs.
     "--tb=long",                        # Trace-back print mode.
-    "--cov=./src/burnout",              # Cover our package specifically
+    "--cov=./src/osd_masker",           # Cover our package specifically
     "--cov=./tests",                    # Also cover our tests for dead spots
     "--cov-report=term",                # Coverage report to terminal
     "--cov-report=xml:coverage.xml",    # for external tool reporting
 ]
 # NOTE: --doctest-modules removed from addopts. To run doctests, use:
-#   pytest --doctest-modules src/burnout
+#   pytest --doctest-modules src/osd_masker
 # Doctests require optional dependencies to be installed.
 testpaths = [
     "tests",
@@ -147,7 +147,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 allow-star-arg-any = true  # Allow Any for *args and **kwargs
 
 [tool.ruff.lint.isort]
-known-first-party = ["burnout"]
+known-first-party = ["osd_masker"]
 
 [tool.ruff.lint.mccabe]
 # Flag errors (`C901`) whenever the complexity level exceeds 5.
@@ -176,7 +176,7 @@ reportMissingImports = "warning"
 reportDeprecated = "warning"
 typeCheckingMode = "standard"
 include = [
-    "src/burnout",
+    "src/osd_masker",
     "tests",
     "scripts",
     "docs",

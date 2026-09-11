@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to help with the BurnOut release process. Performs the following steps:
+# Script to help with the OSDMasker release process. Performs the following steps:
 #   - Poetry version (major, minor, or patch)
 #   - Combine release note fragments into one file
 #   - Update release notes index
