@@ -1,4 +1,4 @@
-# BurnOut
+# OSDMasker
 
 (TODO)
 
