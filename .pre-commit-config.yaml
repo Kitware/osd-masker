@@ -26,7 +26,7 @@ repos:
       - '--select=FKA1'
       - '--kwargs-max-positional-arguments=2'
       - --kwargs-ignore-function-pattern-extend
-      - ^np\..*|^pytest\..*|^random\..*|^mock\.patch.*|^patch|^re\..*|^json\..*|^os\.path\..*|^warnings\..*|^math\..*|^open|^click.option|^yaml\..*|^sys\..*|\.get$|\.replace$|\.transpose$|\.reshape$|^runner\.invoke$|^dict\.fromkeys$|^binom$
+      - ^torch\..*|^np\..*|^pytest\..*|^random\..*|^mock\.patch.*|^patch|^re\..*|^json\..*|^os\.path\..*|^warnings\..*|^math\..*|^open|^click.option|^yaml\..*|^sys\..*|\.get$|\.replace$|\.transpose$|\.reshape$|view$|permute$|unflatten$|^runner\.invoke$|^dict\.fromkeys$|^binom$
     additional_dependencies:
       - flake8-force-keyword-arguments
 - repo: local
