@@ -1,9 +1,5 @@
-"""Example doctest, to be removed later.
+"""Define the osd-masker package."""
 
->>> assert 1 + 1 == 2
-"""
+from importlib import metadata
 
-
-def placeholder_function() -> None:  # pragma: no cover
-    """Do nothing."""
-    pass
+__version__ = metadata.version("osd-masker")
