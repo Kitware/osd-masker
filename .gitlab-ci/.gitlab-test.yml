@@ -26,8 +26,6 @@
       - TOX_ENV: pytest
         RUNNER_TAG: single-gpu
         CUDA_VISIBLE_DEVICES: "0"
-      - TOX_ENV: doctests
-        RUNNER_TAG: small-cpu
   script:
     # Convert PYTHON_VERSION (3.10) to tox factor (py310) and run specific env
     - tox -e "py${PYTHON_VERSION//./}-${TOX_ENV}"

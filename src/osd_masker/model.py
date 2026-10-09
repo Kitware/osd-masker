@@ -1,4 +1,12 @@
-"""Defines OSDMasker PyTorch model."""
+"""Defines OSDMasker PyTorch model.
+
+Example:
+    >>> model = OSDMasker().eval()
+    >>> image = torch.zeros(1, 1, 16, 16)
+    >>> with torch.no_grad():
+    ...     mask = model(image)
+    >>> assert mask.shape == (1, 1, 16, 16)
+"""
 
 import math
 
