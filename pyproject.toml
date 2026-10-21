@@ -65,10 +65,10 @@ docs = [
 # Testing
 tests = [
     # pytest unittesting
-    "pytest>=7.2.0,<9.0.0", # temporary upper bound until pytest-codeblock patches its deprecated pytest_collect_file hook for pytest 9
+    "pytest>=9.0.3", # CVE-2025-71176
     "pytest-cov>=4.0.0", # reports code coverage
     "pytest-xdist>=3.8.0", # allows -n auto|# to be used to run pytests in parallel
-    "pytest-codeblock (>=0.5.8,<0.6.0)", # required for code block testing in docs
+    "pytest-codeblock (>=0.5.10,<0.6.0)", # required for code block testing in docs
 ]
 
 [tool.pytest.ini_options]
