@@ -20,12 +20,17 @@ classifiers = [
     'Programming Language :: Python :: 3.14',
 ]
 dependencies = [
-    # CVE-2021-34141 (numpy < 1.26)
-    "numpy>=1.26",
-    "torch",
+    # Keep separate Python ranges so Poetry can select compatible NumPy versions.
+    # https://stackoverflow.com/questions/77431252/why-doesnt-poetry-select-the-good-version-of-my-dependency
+    # NumPy ranges match SMQTK; NumPy 1 and 2 are supported on
+    # Python 3.10–3.12. Numba supplies its own NumPy compatibility bounds.
+    "numpy>=1.23.5; python_version < '3.13'", # Matches SMQTK on Python 3.10–3.12
+    "numpy>=2.1; python_version >= '3.13' and python_version < '3.14'", # Python 3.13 wheels
+    "numpy>=2.3.2; python_version >= '3.14'", # Python 3.14 wheels
+    "torch>=2.10.0",  # CVE-2025-3001
     "opencv-python-headless>=4.8.1.78",  # CVE-2023-4863
     "tqdm>=4.66.3",  # GHSA-g7vv-2v7x-gj9p
-    "av",
+    "av>=17.1.0,<18.0.0",
 ]
 
 [tool.poetry]
