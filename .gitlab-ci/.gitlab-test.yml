@@ -11,7 +11,7 @@
   extends: .tox-setup
   stage: test
   tags:
-    - autoscaler
+    - k8s-single-gpu
   rules:
     - !reference [.shared-setup, rules]
   before_script:
@@ -24,7 +24,7 @@
   parallel:
     matrix:
       - TOX_ENV: pytest
-        RUNNER_TAG: single-gpu
+        RUNNER_TAG: k8s-single-gpu
         CUDA_VISIBLE_DEVICES: "0"
   script:
     # Convert PYTHON_VERSION (3.10) to tox factor (py310) and run specific env
@@ -73,7 +73,7 @@ tox:pytest:py3.14:
 tox:docs:
   extends: .test-setup
   tags:
-    - autoscaler
+    - k8s-medium-cpu
   image: python:$PYTHON_VERSION
   parallel:
     matrix:
@@ -85,7 +85,7 @@ tox:docs:
 .tox:coverage:version:
   extends: .test-setup
   tags:
-    - small-cpu
+    - k8s-small-cpu
   before_script:
     - !reference [.shared-setup, before_script]
     # Install dependencies (coverage is in the tests dependency group)
@@ -155,7 +155,7 @@ tox:coverage:py3.14:
 tox:coverage:
   extends: .test-setup
   tags:
-    - small-cpu
+    - k8s-small-cpu
   coverage: '/^TOTAL\s+\d+\s+\d+\s+(\d+(?:\.\d+)?%)/'
   dependencies:
     - tox:coverage:py3.10
