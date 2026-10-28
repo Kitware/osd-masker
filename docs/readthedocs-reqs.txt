@@ -1,0 +1,3 @@
+# Additional requirements for building our documentation in read-the-docs build
+sphinx-prompt==1.5.0
+sphinx-copybutton==0.5.2
