@@ -5,6 +5,7 @@ default:
 stages:
   - test
   - quality
+  - docs
   - security
 
 
@@ -13,4 +14,5 @@ include:
 
   - local: .gitlab-ci/.gitlab-test.yml
   - local: .gitlab-ci/.gitlab-quality.yml
+  - local: .gitlab-ci/.gitlab-docs.yml
   - local: .gitlab-ci/.gitlab-security.yml
