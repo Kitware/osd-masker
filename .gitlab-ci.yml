@@ -8,6 +8,14 @@ stages:
   - docs
   - security
 
+  - mirror
+  - publish
+
+.skippable: &skippable
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "schedule"
+    when: never
+  - when: always
 
 include:
   - local: .gitlab-ci/.gitlab-shared.yml
@@ -16,3 +24,8 @@ include:
   - local: .gitlab-ci/.gitlab-quality.yml
   - local: .gitlab-ci/.gitlab-docs.yml
   - local: .gitlab-ci/.gitlab-security.yml
+
+  - local: .gitlab-ci/.gitlab-mirror.yml
+    <<: *skippable
+  - local: .gitlab-ci/.gitlab-publish.yml
+    <<: *skippable
