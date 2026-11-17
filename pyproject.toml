@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "osd-masker"
-version = "0.1.0"
+version = "0.0.1"
 description = "OSDMasker is a PyTorch model for masking text and other on-screen display (OSD) elements which have been burned into a video."
 license = "Apache-2.0"
 readme = "README.md"
