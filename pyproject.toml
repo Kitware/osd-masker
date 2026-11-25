@@ -28,7 +28,6 @@ dependencies = [
     "numpy>=2.1; python_version >= '3.13' and python_version < '3.14'", # Python 3.13 wheels
     "numpy>=2.3.2; python_version >= '3.14'", # Python 3.14 wheels
     "torch>=2.10.0",  # CVE-2025-3001
-    "opencv-python-headless>=4.8.1.78",  # CVE-2023-4863
     "tqdm>=4.66.3",  # GHSA-g7vv-2v7x-gj9p
     "av>=17.1.0,<18.0.0",
 ]
