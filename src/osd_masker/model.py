@@ -1,11 +1,6 @@
-"""Defines OSDMasker PyTorch model.
+"""PyTorch model for masking burned-in on-screen displays.
 
-Example:
-    >>> model = OSDMasker().eval()
-    >>> image = torch.zeros(1, 1, 16, 16)
-    >>> with torch.no_grad():
-    ...     mask = model(image)
-    >>> assert mask.shape == (1, 1, 16, 16)
+Use OSDMasker to compute an on-screen display logit per pixel in a batch of grayscale images.
 """
 
 import math
@@ -141,10 +136,41 @@ class _AttentionConv(torch.nn.Module):
 
 
 class OSDMasker(torch.nn.Module):
-    """PyTorch model for detecting text and other elements of on-screen displays burned into an image."""
+    """Predicts per-pixel logits for burned-in on-screen display elements.
+
+    The model processes batches of single-channel (grayscale) images and preserves
+    their spatial dimensions. Load trained weights before using the
+    model to identify display elements such as text or graphics, since initialization
+    yields random weights.
+
+    Examples:
+        Run the model on a batch of two grayscale images.
+
+        >>> import torch
+        >>> from osd_masker.model import OSDMasker
+        >>> model = OSDMasker().eval()
+        >>> images = torch.zeros(2, 1, 16, 16)
+        >>> with torch.no_grad():
+        ...     logits = model(images)
+        >>> tuple(logits.shape)
+        (2, 1, 16, 16)
+    """
 
     def __init__(self) -> None:
-        """Create an OSDMasker model initialized with random weights."""
+        """Initializes the model with random weights.
+
+        The model starts in training mode. Users should train directly
+        from this or switch to eval() with loaded weights.
+
+        Examples:
+            Verify the model is in training mode.
+
+            >>> import torch
+            >>> from osd_masker.model import OSDMasker
+            >>> model = OSDMasker()
+            >>> model.training
+            True
+        """
         super().__init__()
         self._conv1 = _ConvLayer(in_dim=1, out_dim=4, kernel_size=3)
         self._conv2 = _ConvLayer(in_dim=1, out_dim=8, kernel_size=5)
@@ -157,16 +183,34 @@ class OSDMasker(torch.nn.Module):
         self._mlp3 = _ConvMLP(in_dim=16, hidden_dim=32, out_dim=1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Detect pixels of on-screen display.
+        """Computes an on-screen display (burn-in) logit mask over every pixel.
 
         Args:
             x:
-                Input grayscale image with dimensions (N, 1, H, W) and pixel value range (0.0, 1.0).
-                Dimensions H and W must be divisible by 8.
+                Grayscale images (torch.Tensor, shape-(N, 1, H, W)) where N is the batch size
+                and H and W are positive multiples of 8. Use floating-point pixel values in the
+                range [0.0, 1.0] that match the dtype of the model parameters (float32 by default).
 
         Returns:
-            Mask with dimensions (N, 1, H, W) containing logit values indicating confidence that each pixel
-            is part of the on-screen display.
+            Raw logits mask (torch.Tensor, shape-(N, 1, H, W)). Larger values indicate stronger
+            evidence that a pixel belongs to an on-screen display. Apply torch.sigmoid to convert
+            to probabilities.
+
+        Raises:
+            ValueError: If x is not 4-dimensional, has a channel count other than 1, or has
+                a height or width not divisible by 8.
+
+        Examples:
+            Call the model and convert logits to probabilities.
+
+            >>> import torch
+            >>> from osd_masker.model import OSDMasker
+            >>> model = OSDMasker().eval()
+            >>> image = torch.full((1, 1, 8, 16), 0.5)
+            >>> with torch.no_grad():
+            ...     probs = torch.sigmoid(model(image))
+            >>> tuple(probs.shape)
+            (1, 1, 8, 16)
         """
         if len(x.shape) != 4 or x.shape[1] != 1 or x.shape[2] % 8 or x.shape[3] % 8:
             raise ValueError(f"Expected input with shape (N, 1, H, W) where H and W are divisible by 8. Got {x.shape}")
